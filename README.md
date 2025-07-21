@@ -40,7 +40,7 @@ docker pull procube/gh-pages-nginx:latest
 
 ```bash
 docker run -d \
-  -p 8080:80 \
+  -p 80:80 \
   -e GITHUB_REPO_OWNER=your-username \
   -e GITHUB_REPO_NAME=your-repo-name \
   -e GITHUB_TOKEN=your-github-token \

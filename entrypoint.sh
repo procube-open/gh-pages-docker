@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 環境変数のチェック
 if [ -z "${GITHUB_REPO_OWNER}" ]; then
@@ -18,7 +18,7 @@ if [ -z "${GITHUB_TOKEN}" ]; then
 fi
 
 # ダウンロード対象のブランチ名 (gh_pages)
-BRANCH_NAME="gh_pages"
+BRANCH_NAME="gh-pages"
 
 # ダウンロードURLの構築
 # GitHubのアーカイブダウンロードURL形式: https://github.com/OWNER/REPO/archive/refs/heads/BRANCH.zip
@@ -28,7 +28,9 @@ DOWNLOAD_URL="https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/archiv
 TEMP_ZIP_FILE="/tmp/${BRANCH_NAME}.zip"
 
 # Webコンテンツの公開ディレクトリ
-WEB_CONTENT_DIR="/usr/share/nginx/html/web-content"
+WEB_CONTENT_BASE="/usr/share/nginx/html"
+WEB_CONTENT_TEMPDIR="${WEB_CONTENT_BASE}/${GITHUB_REPO_NAME}-${BRANCH_NAME}"
+WEB_CONTENT_DIR="${WEB_CONTENT_BASE}/web-content"
 
 echo "Attempting to download web content from: ${DOWNLOAD_URL}"
 
@@ -48,13 +50,13 @@ fi
 echo "Successfully downloaded ${TEMP_ZIP_FILE}"
 
 # 既存のコンテンツを削除（クリーンな状態にするため）
-rm -rf "${WEB_CONTENT_DIR}/*"
+rm -rf "${WEB_CONTENT_DIR}"
 
 # ダウンロードしたZIPファイルをWebコンテンツディレクトリに展開
 # -q: 静かに展開 (出力を抑制)
 # -d: 展開先ディレクトリを指定
-# --strip-components 1: ZIPファイル内のトップレベルディレクトリを削除して展開
-unzip -q "${TEMP_ZIP_FILE}" -d "${WEB_CONTENT_DIR}" --strip-components 1
+unzip -q "${TEMP_ZIP_FILE}" -d "${WEB_CONTENT_BASE}" \
+  && mv "${WEB_CONTENT_TEMPDIR}" "${WEB_CONTENT_DIR}/"
 
 # 展開の成功を確認
 if [ $? -ne 0 ]; then
