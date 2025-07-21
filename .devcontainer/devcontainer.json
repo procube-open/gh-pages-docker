@@ -1,0 +1,38 @@
+{
+  "name": "GitHub Pages Docker Development",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  // Dockerのビルドとテストに必要な機能を有効化
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // Dockerfileの開発とテストに有用なVS Code拡張機能
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Docker関連の拡張機能
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+
+        // Dockerfileとシェルスクリプトの開発支援
+        "ms-vscode.vscode-language-pack-ja",
+        "timonwong.shellcheck",
+        "foxundermoon.shell-format",
+        "redhat.vscode-yaml",
+
+        // マークダウン編集支援
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint"
+      ]
+    }
+  },
+
+  // コンテナ起動時に実行するコマンド
+  "postCreateCommand": "echo 'Development container is ready! You can now build and test your Docker images.'"
+}

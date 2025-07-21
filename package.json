@@ -1,0 +1,12 @@
+{
+  "name": "procube/gh-pages-nginx",
+  "version": "1.0.0-rc.1",
+  "description": "Dummy package.json to manage container image version tag",
+  "repository": "https://github.com/procube-open/gh-pages-nginx-cr.git",
+  "author": "Mitsuru Nakakawaji <mitsuru@procube.jp>",
+  "private": true,
+  "scripts": {
+    "build": "docker build -t gh-pages-nginx .",
+    "start": "docker run -d -p 80:80 gh-pages-nginx"
+  }
+}
