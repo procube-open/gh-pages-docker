@@ -47,7 +47,7 @@ jobs:
           echo "::error::The image for the version ${{ steps.get-version.outputs.version }} is already pushed, so skip rest steps."
       - name: Add Tag
         if: >-
-          ${{steps.tag-exists.outputs.tag_exists == 0 }}
+          ${{ steps.tag-exists.outputs.tag_exists == 0 }}
         run: |
           git tag v${VERSION}
           git push --tags origin v${VERSION}
@@ -69,7 +69,7 @@ jobs:
             type=raw,value=latest
       - name: Build and push Docker image
         if: >-
-          ${steps.tag-exists.outputs.tag_exists == 0}}
+          ${{ steps.tag-exists.outputs.tag_exists == 0}}
         uses: docker/build-push-action@v5
         with:
           context: .
