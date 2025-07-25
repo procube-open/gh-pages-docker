@@ -45,14 +45,6 @@ jobs:
         if: ${{steps.tag-exists.outputs.tag_exists == 1}}
         run: |
           echo "::error::The image for the version ${{ steps.get-version.outputs.version }} is already pushed, so skip rest steps."
-      - name: Add Tag
-        if: >-
-          ${{ steps.tag-exists.outputs.tag_exists == 0 }}
-        run: |
-          git tag v${VERSION}
-          git push --tags origin v${VERSION}
-        env:
-          VERSION: ${{ steps.get-version.outputs.version }}
       - name: Extract metadata (tags, labels) for Docker
         if: >-
           ${{steps.tag-exists.outputs.tag_exists == 0}}
