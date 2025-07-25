@@ -38,7 +38,8 @@ echo "Attempting to download web content from: ${DOWNLOAD_URL}"
 # -L: リダイレクトをフォロー
 # -H: AuthorizationヘッダーでPATを渡す (HTTP Basic認証)
 # -o: 出力ファイル名を指定
-curl -L -H "Authorization: token ${GITHUB_TOKEN}" \
+# -q: 静かに展開 (出力を抑制)
+curl -q -L -H "Authorization: token ${GITHUB_TOKEN}" \
   "${DOWNLOAD_URL}" -o "${TEMP_ZIP_FILE}"
 
 # ダウンロードの成功を確認
@@ -53,9 +54,8 @@ echo "Successfully downloaded ${TEMP_ZIP_FILE}"
 rm -rf "${WEB_CONTENT_DIR}"
 
 # ダウンロードしたZIPファイルをWebコンテンツディレクトリに展開
-# -q: 静かに展開 (出力を抑制)
 # -d: 展開先ディレクトリを指定
-unzip -q "${TEMP_ZIP_FILE}" -d "${WEB_CONTENT_BASE}" \
+unzip "${TEMP_ZIP_FILE}" -d "${WEB_CONTENT_BASE}" \
   && mv "${WEB_CONTENT_TEMPDIR}" "${WEB_CONTENT_DIR}/"
 
 # 展開の成功を確認
